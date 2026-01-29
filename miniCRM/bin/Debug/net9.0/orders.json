@@ -1,0 +1,16 @@
+[
+  {
+    "Id": 1,
+    "ClientId": 1,
+    "Description": "Разработка логотипа",
+    "Amount": 15000.0,
+    "DueDate": "2025-12-26"
+  },
+  {
+    "Id": 2,
+    "ClientId": 1,
+    "Description": "Настройка рекламы",
+    "Amount": 25000.0,
+    "DueDate": "2026-01-05"
+  }
+]

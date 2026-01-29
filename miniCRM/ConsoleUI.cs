@@ -2,22 +2,28 @@
 {
     public class ConsoleUI
     {
-        private readonly CrmService _crmService;
+        private readonly IEnumerable<IClientReader> _clientReaders;
+        private readonly IClientWriter _clientWriter;
 
-        public ConsoleUI(CrmService crmService)
+        public ConsoleUI(IEnumerable<IClientReader> clientReaders, IClientWriter clientWriter)
         {
-            _crmService = crmService;
+            _clientReaders = clientReaders;
+            _clientWriter = clientWriter;
         }
 
-        public void Show()
+        public void Show(BaseReportGenerator report1, BaseReportGenerator report2)
         {
-            Console.WriteLine("--- Система CRM запущена ---");
-            _crmService.AddClient(new Client(1, "Иван Иванов", "ivan@example.com", DateTime.Now));
-            Console.WriteLine("\n--- Демонстрация паттерна Стратегия ---");
-            var nameStrategy = new SearchClientsByNameStrategy("Иван");
-            var foundByName = _crmService.FindClients(nameStrategy);
+            ShowAllClients();
+        }
 
-            foreach (var client in foundByName)
+        public void ShowAllClients()
+        {
+            Console.WriteLine("\n--- Список ВСЕХ клиентов из ВСЕХ источников ---");
+
+            // Объединяем клиентов из всех источников
+            var allClients = _clientReaders.SelectMany(reader => reader.GetAllClients());
+
+            foreach (var client in allClients)
             {
                 Console.WriteLine(client);
             }
