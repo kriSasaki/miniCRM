@@ -5,6 +5,7 @@
         private readonly IStorage<T> _storage;
         protected List<T> _items;
         protected int _nextId = 1;
+        private int a = 1;
 
         protected BaseRepository(IStorage<T> storage)
         {
@@ -23,4 +24,5 @@
 
         public abstract T GetById(int id);
     }
+
 }
