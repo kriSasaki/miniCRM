@@ -2,7 +2,6 @@
 {
     public abstract class BaseRepository<T> : IRepository<T> where T : class
     {
-        private readonly IStorage<T> _storage;
         protected List<T> _items;
         protected int _nextId = 1;
         private int a = 1;
@@ -26,3 +25,4 @@
     }
 
 }
+
