@@ -1,6 +1,6 @@
 ﻿namespace miniCRM
 {
-    public sealed class CrmService : IClientReader, IOrderReader, IClientWriter
+    public sealed class CrmService : IClientReader, IOrderReader, IClientWriter, IOrderWriter
     {
         private readonly IClientRepository _clientRepository;
         private readonly IOrderRepository _orderRepository;
@@ -43,5 +43,11 @@
         }
 
         public IEnumerable<Order> GetAllOrders() => _orderRepository.GetAll();
+
+        public void AddOrder(Order order)
+        {
+            _orderRepository.Add(order);
+            _orderRepository.SaveAsync().Wait();
+        }
     }
 }

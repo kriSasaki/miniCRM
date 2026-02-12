@@ -16,7 +16,7 @@ public class Program
             legacyAdapter   // Адаптированный старый сервис
         };
 
-        var ui = new ConsoleUI(clientReaders, crmService);
+        var ui = new ConsoleUI(clientReaders, crmService, crmService, crmService);
 
         crmService.ClientAdded += notifier.OnClientAdded;
 

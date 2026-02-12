@@ -16,8 +16,8 @@ namespace miniCRM
             string legacyData = _adapter.GetClientsAsString();
             var adaptedClients = new List<Client>();
 
-            // Логика "перевода"
             var clientStrings = legacyData.Split(';');
+
             foreach (var clientStr in clientStrings)
             {
                 var parts = clientStr.Split(',');
