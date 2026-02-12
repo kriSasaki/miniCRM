@@ -4,10 +4,6 @@
     {
         public OrderRepository(IStorage<Order> storage) : base(storage)
         {
-            if (_items.Any())
-            {
-                _nextId = _items.Cast<Order>().Max(o => o.Id) + 1;
-            }
         }
 
         public override Order GetById(int id)

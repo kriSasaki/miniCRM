@@ -4,10 +4,7 @@
     {
         public ClientRepository(IStorage<Client> storage) : base(storage)
         {
-            if (_items.Any())
-            {
-                _nextId = _items.Cast<Client>().Max(c => c.Id) + 1;
-            }
+            // nextId initialization moved to BaseRepository
         }
 
         public override Client GetById(int id)

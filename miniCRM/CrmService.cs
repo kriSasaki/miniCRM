@@ -1,6 +1,6 @@
 ﻿namespace miniCRM
 {
-    public sealed class CrmService
+    public sealed class CrmService : IClientReader, IOrderReader, IClientWriter, IOrderWriter
     {
         private readonly IClientRepository _clientRepository;
         private readonly IOrderRepository _orderRepository;
@@ -12,7 +12,9 @@
             var clientStorage = new JsonFileStorage<Client>("clients.json");
             var orderStorage = new JsonFileStorage<Order>("orders.json");
 
-            var clientRepo = new ClientRepository(clientStorage);
+            var realClientRepo = new ClientRepository(clientStorage);
+            var clientRepo = new ClientRepositoryProxy(realClientRepo);
+
             var orderRepo = new OrderRepository(orderStorage);
             return new CrmService(clientRepo, orderRepo);
         });
@@ -38,6 +40,14 @@
         public IEnumerable<Client> FindClients(IClientSearchStrategy searchStrategy)
         {
             return _clientRepository.GetAll().Where(client => searchStrategy.IsMatch(client));
+        }
+
+        public IEnumerable<Order> GetAllOrders() => _orderRepository.GetAll();
+
+        public void AddOrder(Order order)
+        {
+            _orderRepository.Add(order);
+            _orderRepository.SaveAsync().Wait();
         }
     }
 }
